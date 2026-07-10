@@ -1,0 +1,16 @@
+name: ignite3
+
+services:
+  node1:
+    image: apacheignite/ignite:3.0.0
+    container_name: ignite3-node1
+    command: --node-name node1
+    ports:
+      - "10300:10300"   # REST API - used for cluster management / init
+      - "10800:10800"   # Thin client port - used by the Java application
+    environment:
+      JVM_MAX_MEM: "2g"
+      JVM_MIN_MEM: "1g"
+    volumes:
+      - ./config/ignite-config.conf:/opt/ignite/etc/ignite-config.conf:ro
+    restart: unless-stopped
